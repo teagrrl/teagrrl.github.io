@@ -1,16 +1,14 @@
 <html>
 	<head>
-		<title>teagrrl.dev</title>
+		<title>yoori.space</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style>
 			html, body {
-				position: relative;
 				margin: 0;
 				padding: 0;
-				background: #1a0e26;
-				color: #333;
-				font-family: 'Roboto', Arial, sans-serif;
-				overflow:hidden;
+				background: #111;
+				color: #fff;
+				font-family: 'Pacifico', cursive;
 			}
 			canvas {
 				position: absolute;
@@ -19,117 +17,23 @@
 				bottom: 0;
 				left: 0;
 				margin: auto;
-				font-family: 'Pacifico', cursive;
 			}
 			@font-face {
 				font-family: 'Pacifico';
 				font-style: normal;
 				font-weight: 400;
-				src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6Mk.woff2) format('woff2');
-			}
-			#b {
-				position: absolute;
-				top: 100px;
-				left: 100px;
-				bottom: 100px;
-				right: 100px;
-				overflow: hidden;
-				z-index: 0;
-			}
-			#t {
-				position: absolute;
-				top: 5px;
-				right: 5px;
-				bottom: 5px;
-				left: 5px;
-				background: #fff;
-				padding: 20px;
-				margin: auto;
-				z-index: 1;
-			}
-			.r {
-				position: relative;
-				top: -50%;
-				left: -50%;
-				height: 200%;
-				width: 200%;
-				transform: rotate3d(0,0,1,15deg);
-			}
-			.g {
-				animation: g 4s linear infinite;
-				-webkit-animation: g 4s linear infinite;
-			}
-			@keyframes g {
-				0%, 4%, 5%, 8%, 10%, 42%, 44%, 46%, 48%, 64%, 65%, 100% { transform: matrix(1, 0, 0, 1, 0, 0); }
-				4.3% { transform: matrix(1, 0, 0, 1.7, 0, 0);}
-				8.6% { transfrom: matrix(1, 0, 0, 1.6, -10, 0); }
-				43% { transform: matrix(1.5, 0, 0, 1, 0, 0); }
-				47% { transform: matrix(1.2, 0, 18, 1.2, 0, 0); }
-				63% { transform: matrix(1, 0, 0.2, 1, 0, 0); }
-				64.2% { transform: matrix(1, 0, -7, 1, 3, -2); }
-			}
-			@-webkit-keyframes g {
-				0%, 4%, 5%, 8%, 10%, 42%, 44%, 46%, 48%, 64%, 65%, 100% { transform: matrix(1, 0, 0, 1, 0, 0); }
-				4.3% { transform: matrix(1, 0, 0, 1.7, 0, 0);}
-				8.6% { transfrom: matrix(1, 0, 0, 1.6, -10, 0); }
-				43% { transform: matrix(1.5, 0, 0, 1, 0, 0); }
-				47% { transform: matrix(1.2, 0, 18, 1.2, 0, 0); }
-				63% { transform: matrix(1, 0, 0.2, 1, 0, 0); }
-				64.2% { transform: matrix(1, 0, -7, 1, 3, -2); }
-			}
-			span.w, span.p, span.u {
-				position: absolute;
-				top: -50%;
-				display: block;
-				height: 200%;
-				width: 100%;
-			}
-			span.w {
-				background: rgb(242,233,228);
-				left: 0%;
-			}
-			span.p {
-				background: rgb(245,168,184);
-				left: 38%;
-			}
-			span.u {
-				background: rgb(92,206,250);
-				left: 62%;
-			}
-			.email::before {
-				content: "mail"
-			}
-			.email::after {
-				content: "teagrrl.dev"
+				src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/l/font?kit=FwZY7-Qmy14u9lezJ96F-saFxCDbncCz4xHV&skey=a336e4011ec32111&v=v12) format('woff2');
 			}
 		</style>
 	</head>
 	<body>
 		<canvas id="c">
-			<span>teagrrl.dev</span>
+			<span>yoori.space</span>
 		</canvas>
-		<div id="b">
-			<div id="t">
-				<h1 class="g">welcome to teagrrl.dev</h1>
-				<span>hi, i'm lilac and i'm a mobile and web developer, math nerd, amateur musician, and graphic designer. sorry this is a mess right now. i've recycled a lot of my older work for this temporary website. you can contact me at 
-				<span class="email">@</span>.</span>
-			</div>
-			<div class="r">
-				<span class="w"></span>
-				<span class="p"></span>
-				<span class="u"></span>
-			</div>
-		</div>
 		<script>
 			(function() {
-				var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame, canvas = document.getElementById("c"), context = canvas.getContext("2d"), time = 0, frame = 0, purple = "rgb(31,16,48)", rand = {}, canvasWidth, canvasHeight, size, radius, centerX, centerY, k, cycle;
+				var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame, canvas = document.getElementById("c"), context = canvas.getContext("2d"), time = 0, frame = 0, transparent = "rgba(0,0,0,0)", white = "rgb(255,255,255)", blue = "rgb(80,194,220)", red = "rgb(222,91,91)", rand = Math.random(), yoori = "yoo" + (rand > 0.6 ? "" : (rand > 0.3 ? "o" : "oo")) + "ri", size, radius, center, k;
 				
-				setTimeout(function() {
-					var anims = document.getElementsByClassName("bookend_anim");
-					while(anims.length > 0) {
-						anims.item(0).className = anims.item(0).className.replace("bookend_anim", "").trim();
-					}
-				}, 900);
 				resize();
 				draw();
 				
@@ -138,13 +42,12 @@
 				}
 				
 				function resize() {
-					canvas.width = canvasWidth = window.innerWidth;
-					canvas.height = canvasHeight = window.innerHeight;
-					size = Math.min(canvasWidth, canvasHeight);
-					radius = size / 12;
-					centerX = centerY = 4 * canvasHeight / 32;
-					k = Math.floor(size * .005);
-					cycle = 20;
+					size = Math.min(window.innerWidth, window.innerHeight) * .9;
+					canvas.width = size;
+					canvas.height = size;
+					radius = size / 3;
+					center = size / 2;
+					k = Math.floor(size * .02);
 				}
 				
 				function colorOpacity(color, alpha) {
@@ -153,14 +56,6 @@
 				
 				function degToRad(deg) {
 					return (deg - 180) * Math.PI / 180;
-				}
-				
-				function getRand(row, col) {
-					var matrixKey = row ? (row + (col ? ("." + col) : "")) : "default";
-					if(!rand[matrixKey]) {
-						rand[matrixKey] = Math.random();
-					}
-					return rand[matrixKey];
 				}
 				
 				function setContextParams(lineWidth, strokeColor, fillColor, shadowColor, shadowBlur) {
@@ -181,35 +76,153 @@
 					}
 				}
 				
-				function drawBg(t) {
-					var bgCount = 9, iCount, jCount,
-						bgDiameter = size / bgCount, 
-						bgRad = 2 * bgDiameter / 5, 
-						bgStroke = bgRad / 2;
+				function drawOrbit(t) {
+					var topOrbit = [
+							{ x: 5 * size / 8, y: center - k * 3 },
+							{ x: size / 2, y: size / 4 },
+							{ x: 11 * size / 32, y: 4 * size / 13 },
+							{ x: 3 * size / 8, y: center - k * 3 }
+						],
+						/*botOrbitF = [
+							{ x: 27 * size / 64, y: center + k * 3 },
+							{ x: 17 * size / 32, y: 23 * size / 32 },
+							{ x: 45 * size / 64, y: 21 * size / 32 },
+							{ x: 43 * size / 64, y: center + k * 3 }
+						],*/
+						botOrbitL = [
+							{ x: 27 * size / 64, y: center + k * 3 },
+							{ x: 29 * size / 64, y: 77 * size / 128 },
+							{ x: 61 * size / 128, y: 5 * size / 8 }
+						],
+						botOrbitR = [
+							{ x: 9 * size / 16, y: 11 * size / 16 },
+							{ x: 5 * size / 8, y: 45 * size / 64 },
+							{ x: 11 * size / 16, y: 5 * size / 8 },
+							{ x: 43 * size / 64, y: center + k * 3 }
+						],
+						comet = [
+							{ x: 29 * size / 64, y: 19 * size / 32 },
+							{ x: 31 * size / 64, y: 39 * size / 64 },
+							{ x: size / 2, y: 83 * size / 128 },
+							{ x: 59 * size / 128, y: 41 * size / 64 },
+							{ x: 57 * size / 128, y: 19 * size / 32 }
+						],
+						orbitStyle = t < 1.6 ? transparent : t < 2.2 ? colorOpacity(white, (t - 1.6) / 0.6) : white;
 					
-					if(canvasWidth > canvasHeight) {
-						iCount = Math.ceil(bgCount * canvasWidth / canvasHeight);
-						jCount = bgCount;
-					}
-					else {
-						iCount = bgCount;
-						jCount = Math.ceil(bgCount * canvasWidth / canvasHeight);
-					}
+					setContextParams(Math.max(k / 2, 1), orbitStyle, orbitStyle, white, k * (Math.sin((t + 10) / 10) + k / 3) / 2);
 					
-					for(var i = 0; i < iCount + 1; i++) {
-						for(var j = 0; j < jCount + 1; j++) {
-							drawBgCircle(bgDiameter * i, bgDiameter * j, bgRad, bgStroke, t);
-						}
+					context.beginPath();
+					drawSpline(topOrbit);
+					drawSpline(botOrbitL);
+					drawSpline(botOrbitR);
+					context.stroke();
+					
+					context.beginPath();
+					drawSpline(comet);
+					context.closePath();
+					context.fill();
+				}
+				
+				function drawStar(xPos, yPos, scale, t) {
+					scale *= k * (1 + Math.sin(t + xPos + yPos)) / 20;
+					
+					context.beginPath();
+					context.moveTo(xPos - scale, yPos);
+					context.arcTo(xPos, yPos, xPos, yPos + scale / 2, scale * 2);
+					context.lineTo(xPos, yPos + scale * 2);
+					context.arcTo(xPos, yPos, xPos + scale / 2, yPos, scale * 2);
+					context.lineTo(xPos + scale, yPos);
+					context.arcTo(xPos, yPos, xPos, yPos - scale / 2, scale * 2);
+					context.lineTo(xPos, yPos - scale * 2);
+					context.arcTo(xPos, yPos, xPos - scale / 2, yPos, scale * 2);
+					context.closePath();
+					context.fill();
+				}
+				
+				function drawStars(t) {
+					var stars = [
+						{ x: 6 * size / 11, y: 2 * size / 9, s: 7 },
+						{ x: 29 * size / 50, y: 3 * size / 11, s: 4 },
+						{ x: 19 * size / 40, y: 12 * size / 47, s: 3 },
+						{ x: 17 * size / 40, y: 11 * size / 45, s: 2 },
+						{ x: 5 * size / 11, y: 5 * size / 23, s: 3 },
+						{ x: 3 * size / 8, y: 11 * size / 15, s: 6 },
+						{ x: 5 * size / 16, y: 23 * size / 35, s: 2 },
+						{ x: 3 * size / 10, y: 9 * size / 14, s: 2 },
+						{ x: 2 * size / 5, y: 2 * size / 3, s: 3 },
+						{ x: 9 * size / 19, y: 7 * size / 10, s: 2 },
+						{ x: 11 * size / 16, y: 13 * size / 19, s: 5 },
+						{ x: 20 * size / 27, y: 10 * size / 17, s: 6 },
+						{ x: 21 * size / 28, y: 5 * size / 8, s: 2 },
+						{ x: 13 * size / 30, y: 6 * size / 19, s: 5 },
+						{ x: 7 * size / 17, y: 14 * size / 41, s: 2 },
+						{ x: 19 * size / 27, y: 19 * size / 33, s: 2 },
+						{ x: size / 4, y: 3 * size / 8, s: 2 },
+						{ x: 2 * size / 9, y: 7 * size / 16, s: 3 },
+						{ x: 13 * size / 20, y: 10 * size / 17, s: 2 },
+						{ x: 3 * size / 5, y: 2 * size / 3, s: 2 },
+						{ x: 28 * size / 43, y: 21 * size / 34, s: 3 }
+					];
+					setContextParams(0, white, white, false, k);
+					for(var i = 0; i < stars.length; i++) {
+						drawStar(stars[i].x, stars[i].y, stars[i].s, t);
 					}
 				}
 				
-				function drawBgCircle(xPos, yPos, bgRad, bgStroke, t) {
-					var posRand = getRand(xPos, yPos);
-					setContextParams(bgStroke, colorOpacity(purple, Math.sin((2 + posRand) * t + 14 * posRand)), false, " ", " ");
+				function drawArc(startAngle, endAngle, t) {
+					setContextParams(k, t < 1.2 ? transparent : t < 2.4 ? colorOpacity(blue, (t - 1.2) / 1.2) : blue, false, blue, k * (Math.sin(t / 10 + 1) + k / 3));
 					
 					context.beginPath();
-					context.arc(xPos, yPos, bgRad, degToRad(0), degToRad(360));
+					context.arc(center, center, radius, degToRad(startAngle), degToRad(endAngle));
 					context.stroke();
+				}
+				
+				function drawSpline(curvePos) {
+					context.moveTo(curvePos[0].x, curvePos[0].y);
+					for(var i = 1; i < curvePos.length - 2; i++) {
+						var midX = (curvePos[i].x + curvePos[i + 1].x) / 2, midY = (curvePos[i].y + curvePos[i + 1].y) / 2;
+						context.quadraticCurveTo(curvePos[i].x, curvePos[i].y, midX, midY);
+					}
+					context.quadraticCurveTo(curvePos[i].x, curvePos[i].y, curvePos[i+1].x, curvePos[i+1].y);
+				}
+				
+				/*function drawLine(curvePos) {
+					context.moveTo(curvePos[0].x, curvePos[0].y);
+					for(var i = 1; i < curvePos.length - 1; i++) {
+						var midX = (curvePos[i].x + curvePos[i + 1].x) / 2, midY = (curvePos[i].y + curvePos[i + 1].y) / 2;
+						context.lineTo(curvePos[i].x, curvePos[i].y);
+						context.lineTo(midX, midY);
+					}
+					context.lineTo(curvePos[i].x, curvePos[i].y);
+				}*/
+				
+				function drawSwoosh(t) {
+					var bla = degToRad(315 + (k / 2)) - Math.asin(k / (2 * radius)),
+						bra = degToRad(155 + (k / 2)) - Math.asin(k / (2 * radius)),
+						tla = degToRad(355 + (k / 3)) - Math.asin(k / (2 * radius)),
+						tra = degToRad(145 + (k / 4)) - Math.asin(k / (2 * radius)),
+						spline = [
+							{ x: size / 8, y: 35 * size / 64 },
+							{ x: center + (radius - k) * Math.cos(tla), y: center + (radius - k) * Math.sin(tla) },
+							{ x: center + (radius - k / 2) * Math.cos(tra), y: center + (radius - k / 2) * Math.sin(tra) },
+							{ x: 29 * size / 32, y: 7 * size / 32 },
+							{ x: center + radius * Math.cos(bra), y: center + radius * Math.sin(bra) },
+							{ x: center + radius * Math.cos(bla), y: center + radius * Math.sin(bla) },
+							{ x: 8 * size / 32, y: 49 * size / 64 }
+						];
+					
+					setContextParams(k, t < 0.4 ? transparent : t < 1 ? colorOpacity(red, (t - 0.4) / 0.6) : red, false, red, k * (Math.sin(t / 10 + 2) + k / 3));
+					
+					context.beginPath();
+					drawSpline(spline);
+					context.stroke();
+				}
+				
+				function drawText(t) {
+					setContextParams(0, false, t < 0.7 ? transparent : t < 1.4 ? colorOpacity(white, (t - 0.7) / 0.7) : white, white, k * (Math.sin(t / 10) + k / 3));
+					context.textAlign = "center";
+					context.font = "italic " + (9 * k) + "px Pacifico";
+					context.fillText(yoori, center - k / 2, center + 2 * k);
 				}
 				
 				function draw() {
@@ -222,9 +235,15 @@
 					
 					try {
 						/* looping animation goes here */
-						context.clearRect(0, 0, canvasWidth, canvasHeight);
+						context.clearRect(0, 0, size, size);
 						context.lineCap = "round";
-						drawBg(time);
+						drawStars(time);
+						drawSwoosh(time);
+						drawOrbit(time);
+						drawArc(0, 140, time);
+						drawArc(160, 310, time);
+						drawArc(320, 350, time);
+						drawText(time);
 					}
 					catch (e) {
 						throw e;
