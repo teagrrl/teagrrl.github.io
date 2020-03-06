@@ -1,0 +1,352 @@
+<html>
+	<head>
+		<title>HRG | astralgoth</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			html, body {
+				position: relative;
+				margin: 0;
+				padding: 0;
+				background: #1a0e26;
+				color: #fff;
+				font-family: 'Pacifico', cursive;
+				overflow:hidden;
+			}
+			canvas {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				margin: auto;
+			}
+			.bookend_left, .bookend_right {
+				position: absolute;
+				top: -50%;
+				height: 200%;
+				width: 100%;
+				transform: rotate(15deg);
+				z-index: 1;
+			}
+			.bookend_left {
+				left: -92%;
+			}
+			.bookend_right {
+				right: -92%;
+			}
+			.bookend_left.bookend_anim {
+				left: -50%;
+			}
+			.bookend_right.bookend_anim {
+				right: -50%;
+			}
+			span.bookend_white, span.bookend_pink, span.bookend_blue {
+				position: absolute;
+				height: 100%;
+				width: 100%;
+			}
+			.bookend_left span.bookend_white {
+				left: -16%;
+			}
+			.bookend_left span.bookend_pink {
+				left: -8%;
+			}
+			.bookend_left span.bookend_blue {
+				left: 0%;
+			}
+			.bookend_right span.bookend_white {
+				right: -16%;
+			}
+			.bookend_right span.bookend_pink {
+				right: -8%;
+			}
+			.bookend_right span.bookend_blue {
+				right: 0%;
+			}
+			.bookend_anim {
+				animation-duration: 1.4s;
+				animation-timing-function: linear;
+				animation-delay: 0.5s;
+				animation-iteration-count: 1;
+			}
+			.bookend_left.bookend_anim {
+				animation-name: bookend_left;
+			}
+			.bookend_right.bookend_anim {
+				animation-name: bookend_right;
+			}
+			.bookend_white {
+				background: rgb(242,233,228);
+				z-index: 3;
+			}
+			.bookend_blue {
+				background: rgb(92,206,250);
+				z-index: 1;
+			}
+			.bookend_pink {
+				background: rgb(245,168,184);
+				z-index: 2;
+			}
+			@font-face {
+				font-family: 'Pacifico';
+				font-style: normal;
+				font-weight: 400;
+				src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6Mk.woff2) format('woff2');
+			}
+			@keyframes bookend_left {
+				from {
+					-webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					left: -50%;
+				}
+			
+				20%, 53%, 80%, to {
+					-webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+					animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+					left: -92%;
+				}
+
+				40%, 43% {
+					-webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					left: -88%;
+				}
+
+				70% {
+					-webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					left: -90%;
+				}
+
+				90% {
+					left: -91%;
+				}
+			}
+			@keyframes bookend_right {
+				from {
+					-webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					right: -50%;
+				}
+			
+				20%, 53%, 80%, to {
+					-webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+					animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+					right: -92%;
+				}
+
+				40%, 43% {
+					-webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					right: -88%;
+				}
+
+				70% {
+					-webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+					right: -90%;
+				}
+
+				90% {
+					right: -91%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="bookend_left bookend_anim">
+			<span class="bookend_white"></span>
+			<span class="bookend_pink"></span>
+			<span class="bookend_blue"></span>
+		</div>
+		<canvas id="c">
+			<span>hrg.astralgoth</span>
+		</canvas>
+		<div class="bookend_right bookend_anim">
+			<span class="bookend_white"></span>
+			<span class="bookend_pink"></span>
+			<span class="bookend_blue"></span>
+		</div>
+		<script>
+			(function() {
+				var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame, canvas = document.getElementById("c"), context = canvas.getContext("2d"), time = 0, frame = 0, transparent = "rgba(0,0,0,0)", white = "rgb(255,255,255)", blue = "rgb(92,206,250)", pink = "rgb(245,168,184)", purple = "rgb(31,16,48)", rand = {}, text = "astralgoth", canvasWidth, canvasHeight, size, radius, centerX, centerY, k, cycle;
+				
+				setTimeout(function() {
+					var anims = document.getElementsByClassName("bookend_anim");
+					while(anims.length > 0) {
+						anims.item(0).className = anims.item(0).className.replace("bookend_anim", "").trim();
+					}
+				}, 1900);
+				resize();
+				draw();
+				
+				window.onresize = function() {
+					resize();
+				}
+				
+				function resize() {
+					canvas.width = canvasWidth = window.innerWidth;
+					canvas.height = canvasHeight = window.innerHeight;
+					size = Math.min(canvasWidth, canvasHeight);
+					radius = size / 3;
+					centerX = canvasWidth / 2;
+					centerY = 7 * canvasHeight / 16;
+					k = Math.floor(size * .02);
+					cycle = 20;
+				}
+				
+				function colorOpacity(color, alpha) {
+					return color.slice(0,-1).split("(").join("a(") + "," + alpha + ")";
+				}
+				
+				function degToRad(deg) {
+					return (deg - 180) * Math.PI / 180;
+				}
+				
+				function getRand(row, col) {
+					var matrixKey = row ? (row + (col ? ("." + col) : "")) : "default";
+					if(!rand[matrixKey]) {
+						rand[matrixKey] = Math.random();
+					}
+					return rand[matrixKey];
+				}
+				
+				function setContextParams(lineWidth, strokeColor, fillColor, shadowColor, shadowBlur) {
+					if(lineWidth) {
+						context.lineWidth = lineWidth;
+					}
+					if(strokeColor) {
+						context.strokeStyle = strokeColor;
+					}
+					if(fillColor) {
+						context.fillStyle = fillColor;
+					}
+					if(shadowColor) {
+						context.shadowColor = shadowColor;
+					}
+					if(shadowBlur) {
+						context.shadowBlur = shadowBlur;
+					}
+				}
+				
+				function drawBg(t) {
+					var bgCount = 5, iCount, jCount,
+						bgDiameter = size / bgCount, 
+						bgRad = 2 * bgDiameter / 5, 
+						bgStroke = bgRad / 2;
+					
+					if(canvasWidth > canvasHeight) {
+						iCount = Math.ceil(bgCount * canvasWidth / canvasHeight);
+						jCount = bgCount;
+					}
+					else {
+						iCount = bgCount;
+						jCount = Math.ceil(bgCount * canvasWidth / canvasHeight);
+					}
+					
+					for(var i = 0; i < iCount + 1; i++) {
+						for(var j = 0; j < jCount + 1; j++) {
+							drawBgCircle(bgDiameter * i, bgDiameter * j, bgRad, bgStroke, t);
+						}
+					}
+				}
+				
+				function drawBgCircle(xPos, yPos, bgRad, bgStroke, t) {
+					var posRand = getRand(xPos, yPos);
+					setContextParams(bgStroke, colorOpacity(purple, Math.sin((2 + posRand) * t + 14 * posRand)), false, " ", " ");
+					
+					context.beginPath();
+					context.arc(xPos, yPos, bgRad, degToRad(0), degToRad(360));
+					context.stroke();
+				}
+				
+				function drawOctogon1(t) {
+					setContextParams(k, t < 0.7 ? transparent : t < 1.5 ? colorOpacity(white, (t - 0.7) / 0.9) : cycle - t < 1.2 ? colorOpacity(white, (cycle - t) / 1.2) : white, false, white, k * (Math.sin(t / 10 + 1) + k / 3));
+					
+					context.beginPath();
+					context.moveTo(centerX + (0.63 * radius * Math.cos(degToRad(25))), centerY + (0.63 * radius * Math.sin(degToRad(25))));
+					context.lineTo(centerX + (2 * radius / 3 * Math.cos(degToRad(45))), centerY + (2 * radius / 3 * Math.sin(degToRad(45))));
+					context.lineTo(centerX + (2 * radius / 3 * Math.cos(degToRad(90))), centerY + (2 * radius / 3 * Math.sin(degToRad(90))));
+					context.lineTo(centerX + (2 * radius / 3 * Math.cos(degToRad(135))), centerY + (2 * radius / 3 * Math.sin(degToRad(135))));
+					context.lineTo(centerX + (0.62 * radius * Math.cos(degToRad(162))), centerY + (0.62 * radius * Math.sin(degToRad(162))));
+					context.stroke();
+				}
+				
+				function drawOctogon2(t) {
+					setContextParams(k, t < 0.7 ? transparent : t < 1.5 ? colorOpacity(white, (t - 0.7) / 0.9) : cycle - t < 1.2 ? colorOpacity(white, (cycle - t) / 1.2) : white, false, white, k * (Math.sin(t / 10 + 1) + k / 3));
+					
+					context.beginPath();
+					context.moveTo(centerX + (0.62 * radius * Math.cos(degToRad(195))), centerY + (0.62 * radius * Math.sin(degToRad(195))));
+					context.lineTo(centerX + (2 * radius / 3 * Math.cos(degToRad(225))), centerY + (2 * radius / 3 * Math.sin(degToRad(225))));
+					context.lineTo(centerX + (2 * radius / 3 * Math.cos(degToRad(270))), centerY + (2 * radius / 3 * Math.sin(degToRad(270))));
+					context.lineTo(centerX + (2 * radius / 3 * Math.cos(degToRad(315))), centerY + (2 * radius / 3 * Math.sin(degToRad(315))));
+					context.lineTo(centerX + (0.62 * radius * Math.cos(degToRad(343))), centerY + (0.62 * radius * Math.sin(degToRad(343))));
+					context.stroke();
+				}
+				
+				function drawOutline1(t) {
+					setContextParams(k, t < 0.4 ? transparent : t < 1 ? colorOpacity(pink, (t - 0.4) / 0.6) : cycle - t < 1.2 ? colorOpacity(pink, (cycle - t) / 1.2) : pink, false, pink, k * (Math.sin(t / 10 + 1) + k / 3));
+					
+					context.beginPath();
+					context.arc(centerX, centerY, radius, degToRad(10), degToRad(20));
+					context.lineTo(centerX + (1.34 * radius * Math.cos(degToRad(30))), centerY + (1.34 * radius * Math.sin(degToRad(30))));
+					context.arc(centerX, centerY, radius, degToRad(40), degToRad(140));
+					context.lineTo(centerX + (1.34 * radius * Math.cos(degToRad(150))), centerY + (1.34 * radius * Math.sin(degToRad(150))));
+					context.lineTo(centerX + (1.05 * radius * Math.cos(degToRad(158))), centerY + (1.05 * radius * Math.sin(degToRad(158))));
+					context.stroke();
+				}
+				
+				function drawOutline2(t) {
+					setContextParams(k, t < 0.4 ? transparent : t < 1 ? colorOpacity(pink, (t - 0.4) / 0.6) : cycle - t < 1.2 ? colorOpacity(pink, (cycle - t) / 1.2) : pink, false, pink, k * (Math.sin(t / 10 + 1) + k / 3));
+					
+					context.beginPath();
+					context.arc(centerX, centerY, radius, degToRad(191), degToRad(260));
+					context.lineTo(centerX + (1.34 * radius * Math.cos(degToRad(270))), centerY + (1.34 * radius * Math.sin(degToRad(270))));
+					context.arc(centerX, centerY, radius, degToRad(280), degToRad(349));
+					context.stroke();
+				}
+				
+				function drawArc(startAngle, endAngle, t) {
+					setContextParams(k, t < 1 ? transparent : t < 2.2 ? colorOpacity(blue, (t - 1) / 1.2) : cycle - t < 1.2 ? colorOpacity(blue, (cycle - t) / 1.2) : blue, false, blue, k * (Math.sin(t / 10 + 1) + k / 3));
+					
+					context.beginPath();
+					context.arc(centerX, centerY, radius / 3, degToRad(startAngle), degToRad(endAngle));
+					context.stroke();
+				}
+				
+				function drawText(t) {
+					setContextParams(0, false, t < 1.5 ? transparent : t < 2.2 ? colorOpacity(white, (t - 1.5) / 0.7) : cycle - t < 1.2 ? colorOpacity(white, (cycle - t) / 1.2) : white, white, k * (Math.sin(t / 10) + k / 3));
+					context.textAlign = "center";
+					context.font = "italic " + (9 * k) + "px Pacifico";
+					context.fillText(text, centerX - k / 2, centerY + 2 * k);
+				}
+				
+				function draw() {
+					raf(draw);
+					time = frame/60;
+					if(time * 60 | 0 == frame - 1){
+						time += 0.000001;
+					}
+					frame++;
+					
+					try {
+						/* looping animation goes here */
+						context.clearRect(0, 0, canvasWidth, canvasHeight);
+						context.lineCap = "round";
+						drawBg(time);
+						drawArc(40, 105, time % cycle);
+						drawArc(265, 340, time % cycle);
+						drawOctogon1(time % cycle);
+						drawOctogon2(time % cycle);
+						drawOutline1(time % cycle);
+						drawOutline2(time % cycle);
+						drawText(time % cycle);
+					}
+					catch (e) {
+						throw e;
+					}
+				}
+			})();
+		</script>
+	</body>
+</html>
